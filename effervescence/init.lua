@@ -1,17 +1,43 @@
+-- Settings loaded from Asuna
+local asuna_amount = asuna.settings.particles.amount
+local asuna_enabled = asuna_amount ~= "none" and true or false
+local asuna_chance = (function()
+  if asuna_amount == "less" then
+    return 29
+  elseif asuna_amount == "more" then
+    return 70
+  elseif asuna_amount == "maximum" then
+    return 100
+  else
+    return 1
+  end
+end)()
+local asuna_interval = (function()
+  if asuna_amount == "less" then
+    return 5.25
+  elseif asuna_amount == "more" then
+    return 3.5
+  elseif asuna_amount == "maximum" then
+    return 2.0
+  else
+    return 60.0
+  end
+end)()
+
 effervescence = {
   -- Settings loaded from settingtypes.txt
   settings = {
     environmental = {
-      enabled = core.settings:get_bool("effervescence.environmental.enabled",true),
-      interval = tonumber(core.settings:get("effervescence.environmental.interval",5.25) or 5.25),
-      chance = tonumber(core.settings:get("effervescence.environmental.chance",29) or 29),
+      enabled = asuna_enabled,
+      interval = asuna_interval,
+      chance = asuna_chance,
       radius_x = tonumber(core.settings:get("effervescence.environmental.radius_x",18) or 18),
       radius_y = tonumber(core.settings:get("effervescence.environmental.radius_y",6) or 6),
       radius_z = tonumber(core.settings:get("effervescence.environmental.radius_z",18) or 18),
       look_dir_bias = tonumber(core.settings:get("effervescence.environmental.look_dir_bias",4) or 4),
     },
     player = {
-      enabled = core.settings:get_bool("effervescence.player.enabled",true),
+      enabled = asuna_enabled,
       interval = tonumber(core.settings:get("effervescence.player.interval",0.5) or 0.5),
     },
   },
